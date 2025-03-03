@@ -1,8 +1,5 @@
 @forward "abstracts/variables";
 
-// @use "vendors/bootstrap";
-// @use "vendors/jquery-ui";
-
 @use "base/reset";
 @use "base/base";
 @use "base/typography";
@@ -13,9 +10,9 @@
 @use "layout/sidebar";
 
 @use "components/buttons";
-@use "components/syntax";
-// @use "components/contact";
+@use "components/forms";
 @use "components/comments";
+@use "components/syntax";
 
 @use "pages/home";
 @use "pages/blog";
