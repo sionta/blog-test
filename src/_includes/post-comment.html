@@ -1,3 +1,4 @@
+{% assign date_format = '%d %B %Y, %H:%M' %}
 {% assign _COMMENTS = site.data.comments[page.slug] %}
 {% assign _ENDPOINT = site.staticman.api
   | append: '/v2/entry/'
@@ -7,8 +8,9 @@
   | append: '/comments'
 %}
 
-<section id="comments" class="comments">
+<section id="comment-post" class="comments">
   <h2 class="comments__title">Comments ({{ _COMMENTS.size }})</h2>
+
   {% if _COMMENTS %}
     <ul class="comments__entries">
       {% assign comments = _COMMENTS | sort %}
@@ -16,20 +18,15 @@
       {% for comment in comments %}
         {% assign parentData = comment[1] %}
         {% assign parentGUID = parentData._id %}
-        {% assign _replies = comments | where_exp: 'item', 'item[1].replying_to == parentGUID' %}
+        {% assign parentReplies = comments | where_exp: 'item', 'item[1].replying_to == parentGUID' %}
 
         {% if parentData.replying_to.size < 1 %}
           <li class="comment comment--entry" id="{{ parentGUID }}">
             <div class="comment__header">
               <h3 class="comment__author">{{ parentData.name | escape }}</h3>
               <time class="comment__date" datetime="{{ parentData.date | date_to_xmlschema }}">
-                {{- parentData.date | date: '%d %B %Y, %H:%M' -}}
+                {{- parentData.date | date: date_format -}}
               </time>
-            </div>
-            <div class="comment__content markdown-prose">
-              {{ parentData.message | markdownify }}
-            </div>
-            <div class="comment__reply">
               <button
                 id="reply-button"
                 class="comment__reply-btn"
@@ -38,26 +35,28 @@
               >
                 Reply
               </button>
-
-              {% if _replies.size > 0 %}
-                <ul class="comment__reply-list" aria-labelledby="{{ parentGUID }}">
-                  {% for reply in _replies %}
-                    {% assign _rdata = reply[1] %}
-                    <li class="comment comment--reply" id="{{ _rdata._id }}">
-                      <div class="comment__header">
-                        <h3 class="comment__author">{{ _rdata.name | escape }}</h3>
-                        <time class="comment__date" datetime="{{ _rdata.date | date_to_xmlschema }}">
-                          {{- _rdata.date | date: '%d %B %Y, %H:%M' -}}
-                        </time>
-                      </div>
-                      <div class="comment__content markdown-prose">
-                        {{ _rdata.message | markdownify }}
-                      </div>
-                    </li>
-                  {% endfor %}
-                </ul>
-              {% endif %}
             </div>
+            <div class="comment__content markdown-prose">
+              {{ parentData.message | markdownify }}
+            </div>
+            {% if parentReplies.size > 0 %}
+              <ul class="comment__replies" aria-labelledby="{{ parentGUID }}">
+                {% for reply in parentReplies %}
+                  {% assign childData = reply[1] %}
+                  <li class="comment comment--reply" id="{{ childData._id }}">
+                    <div class="comment__header">
+                      <h3 class="comment__author">{{ childData.name | escape }}</h3>
+                      <time class="comment__date" datetime="{{ childData.date | date_to_xmlschema }}">
+                        {{- childData.date | date: date_format -}}
+                      </time>
+                    </div>
+                    <div class="comment__content markdown-prose">
+                      {{ childData.message | markdownify }}
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
           </li>
         {% endif %}
       {% endfor %}
@@ -66,10 +65,10 @@
     <p class="comments__empty">No comments yet. Be the first to comment!</p>
   {% endif %}
 
-  <form class="form" method="POST" action="{{ _ENDPOINT }}" id="comment-form">
-    <input type="hidden" name="options[redirect]" value="{{ page.id | absolute_url }}#comments">
+  <form class="form comments__form" method="POST" action="{{ _ENDPOINT }}" id="comment-form">
+    <input type="hidden" name="options[redirect]" value="{{ page.id | absolute_url }}#comment-post">
     <input type="hidden" name="options[slug]" value="{{ page.slug }}">
-    <input type="hidden" id="reply-value" name="fields[replying_to]" value="">
+    <input type="hidden" id="reply-field" name="fields[replying_to]" value="">
 
     <fieldset class="comment-form">
       <legend class="comment-form__title">Leave a comment</legend>
@@ -80,13 +79,21 @@
           id="comment-name"
           name="fields[name]"
           class="comment-form__input"
+          placeholder="John Dean"
           autocomplete="name"
           required
         >
       </div>
       <div class="comment-form__field">
         <label for="comment-email" class="comment-form__label">Email <small>(optional)</small></label>
-        <input type="email" id="comment-email" name="fields[email]" class="comment-form__input" autocomplete="email">
+        <input
+          type="email"
+          id="comment-email"
+          name="fields[email]"
+          class="comment-form__input"
+          placeholder="example@email.com"
+          autocomplete="email"
+        >
       </div>
       <div class="comment-form__field">
         <label for="comment-message" class="comment-form__label">Comment <small>(required)</small></label>
@@ -94,17 +101,17 @@
           id="comment-message"
           name="fields[message]"
           class="comment-form__textarea"
+          placeholder="Write a comment, support GitHub Flavored Markdown (GFM) style"
           rows="5"
           required
         ></textarea>
-        <p class="comment-form__info"><small>Support Plaintext or Markdown</small></p>
       </div>
       <div class="comment-form__action">
-        <button type="submit" class="comment-form__button">Send</button>
+        <button type="submit" class="comment-form__button">Comment</button>
         <button
           id="reply-cancel"
           type="button"
-          onclick="resetReplyForm()"
+          onclick="cancelReplyForm()"
           class="comment-form__button"
           style="display: none;"
         >
@@ -116,14 +123,16 @@
 </section>
 
 <script>
-  function resetReplyForm() {
+  function cancelReplyForm() {
+    const commentID = document.getElementById('reply-field').value;
     document.getElementById('reply-cancel').style.display = 'none';
-    document.getElementById('reply-value').value = '';
+    document.getElementById('reply-field').value = '';
+    document.getElementById(commentID).scrollIntoView();
   }
 
   function showReplyForm(commentId) {
     document.getElementById('reply-cancel').style.display = 'inline-block';
-    document.getElementById('reply-value').value = commentId;
+    document.getElementById('reply-field').value = commentId;
     document.getElementById('comment-form').scrollIntoView();
   }
 </script>

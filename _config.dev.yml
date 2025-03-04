@@ -6,7 +6,13 @@ url: ""
 
 #paginate: 4
 
+future: true
 show_drafts: true
+
+liquid:
+  error_mode: warn
+  strict_filters: false
+  strict_variables: false
 
 sass:
   style: expanded

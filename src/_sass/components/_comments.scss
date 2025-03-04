@@ -14,10 +14,41 @@
   }
 }
 
-.comment__reply {
-  margin-top: 0.5rem;
+.comment__replies {
+  border-left: 3px solid #000;
+  list-style: none;
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
 
-  &-btn {
+.comment {
+  background-color: #fff;
+  border: 3px solid #000;
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  &--entry {
+    > .comment__header {
+      .comment__author {
+        flex: 1 0 auto;
+      }
+
+      .comment__date {
+        margin-inline: 1rem;
+      }
+    }
+  }
+
+  &--reply {
+    border-width: 2px;
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__reply-btn {
     display: block;
     background-color: #000;
     color: #fff;
@@ -36,37 +67,16 @@
     }
   }
 
-  &-list {
-    list-style: none;
-    padding-left: 1rem;
-    margin-top: 1rem;
-    border-left: 3px solid #000;
-  }
-}
-
-.comment {
-  background-color: #fff;
-  border: 3px solid #000;
-  margin-bottom: 1rem;
-  padding: 1rem;
-
-  &--reply {
-    border-width: 2px;
-    margin-bottom: 0.5rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
   &__header {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dotted #000;
   }
 
   &__author {
-    font-size: 1rem;
+    font-size: 1.15rem;
     font-weight: bold;
   }
 
@@ -76,7 +86,12 @@
   }
 
   &__content {
-    font-size: 0.9rem;
+    font-size: inherit;
+    margin: 1rem 0;
+
+    > :first-of-type {
+      margin-bottom: 1rem;
+    }
 
     > :last-child {
       margin-bottom: 0;
@@ -98,10 +113,12 @@
   padding: 1rem;
 
   &__title {
-    background-color: #000;
-    color: #fff;
+    background-color: #fff;
+    border: 3px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    color: #000;
     font-family: monospace;
-    font-size: 1.15rem;
+    font-size: 1rem;
     padding: 3px 9px;
   }
 
@@ -121,13 +138,30 @@
     border: 2px solid #000;
     display: block;
     font-family: monospace;
-    padding: 0.5rem;
+    padding: 0.75rem;
     width: 100%;
+
+    &::placeholder {
+      font-size: 0.875rem;
+    }
+
+    // &:focus {
+    //   border-color: #7474f5;
+    //   outline-color: #7474f5;
+    // }
+
+    // &:valid {
+    //   border-color: #4a7c59;
+    // }
+
+    // &:invalid {
+    //   border-color: #c75050;
+    // }
   }
 
   &__message,
   &__textarea {
-    min-height: 60px;
+    min-height: 180px;
     overflow: hidden;
     resize: vertical;
   }
