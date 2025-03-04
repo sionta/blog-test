@@ -58,7 +58,7 @@
     <p class="comments__empty">No comments yet. Be the first to comment!</p>
   {% endif %}
 
-  <form id="comment-form" class="form" method="post" action="{{ _ENDPOINT }}">
+  <form class="form" method="POST" action="{{ _ENDPOINT }}" id="comment-form">
     <input type="hidden" name="options[redirect]" value="{{ page.id | absolute_url }}#comments">
     <input type="hidden" name="options[slug]" value="{{ page.slug }}">
     <input type="hidden" id="replying_to" name="fields[replying_to]" value="">
@@ -67,19 +67,19 @@
       <legend class="comment-form__title">Leave a comment</legend>
       <div class="comment-form__field">
         <label for="name" class="comment-form__label">Name</label>
-        <input type="text" id="name" class="comment-form__input" autocomplete="name" required>
+        <input type="text" id="name" name="fields[name]" class="comment-form__input" autocomplete="name" required>
       </div>
       <div class="comment-form__field">
         <label for="email" class="comment-form__label">Email <small>(optional)</small></label>
-        <input type="email" id="email" class="comment-form__input" autocomplete="email">
+        <input type="email" id="email" name="fields[email]" class="comment-form__input" autocomplete="email">
       </div>
       <div class="comment-form__field">
         <label for="message" class="comment-form__label">Comment</label>
-        <textarea id="message" class="comment-form__textarea" rows="5" required></textarea>
+        <textarea id="message" name="fields[message]" class="comment-form__textarea" rows="5" required></textarea>
       </div>
       <div class="comment-form__action">
         <button type="submit" class="comment-form__button">Send</button>
-        <button type="reset" class="comment-form__button">Reset</button>
+        {% comment %} <button type="reset" class="comment-form__button">Reset</button> {% endcomment %}
       </div>
     </fieldset>
   </form>
