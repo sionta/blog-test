@@ -1,16 +1,18 @@
 ##******** SITE SETTINGS ********##
 
 title: sionta
-tagline: Learn, Practice, Share and Grow
 # The `>` after `description:` means to ignore line-breaks until next key.
 # If you want to omit the line-break after the end of text, use `>-` instead.
 description: &AUTHOR_BIO >
   I strongly believe in the importance of learning, practicing, sharing, and growing.
   I am also committed to doing this in my life, so that it benefits both myself and others.
 
+name: &AUTHOR_NAME Andre Attamimi
+tagline: Learn, Practice, Share and Grow
+
 ## Global author, for multiple author see https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/advanced-usage.md#author-information
 author: &POST_AUTHOR
-  name: Andre Attamimi
+  name: *AUTHOR_NAME
   email: rumatua0@gmail.com
   url: https://github.com/sionta
   twitter: &TWITTER R007MMXV
