@@ -4,7 +4,7 @@
 baseurl: ""
 url: ""
 
-paginate: 4
+#paginate: 4
 
 show_drafts: true
 
