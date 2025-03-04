@@ -8,6 +8,7 @@ import imagemin, { gifsicle, mozjpeg, optipng, svgo } from "gulp-imagemin";
 
 // Build directory path (default: _site)
 const BUILD_DIR = path.resolve(process.env.BUILD_DIR || "_site");
+console.log(`Directory to minification: ${BUILD_DIR}`);
 
 // Minification configuration
 const CONFIG = {

@@ -1,6 +1,6 @@
 {% assign staticman_comments = site.data.comments[page.slug] %}
 {% assign staticman_endpoint = site.staticman.api
-  | append: '/'
+  | append: '/v2/entry/'
   | append: site.staticman.repo
   | append: '/'
   | append: site.staticman.branch
