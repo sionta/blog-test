@@ -21,7 +21,7 @@
 
   &__excerpt,
   &__description {
-    background-color: var(--color-light);
+    background: var(--color-light);
     border: var(--border-width) var(--border-style) var(--border-color);
     padding: 1rem;
   }
@@ -37,10 +37,13 @@
 
 /* Block */
 .blog-card {
-  background-color: var(--color-light);
+  background: var(--color-light);
   border: var(--border-width) var(--border-style) var(--border-color);
-  overflow: hidden;
   transition: transform 0.3s;
+
+  &:not(:has(&__image)) {
+    height: max-content;
+  }
 
   &:hover {
     transform: translate(-5px, -5px);
@@ -62,7 +65,7 @@
   }
 
   &__title {
-    background-color: var(--color-dark);
+    background: var(--color-dark);
     border: 2px solid var(--color-dark);
     color: var(--color-light);
     font-size: 1.5rem;
@@ -81,7 +84,7 @@
 
 .blog__topics {
   overflow-x: auto;
-  background-color: var(--color-light);
+  background: var(--color-light);
   border: var(--border-width) var(--border-style) var(--border-color);
   display: flex;
   flex-wrap: nowrap;
@@ -94,7 +97,7 @@
   }
 
   a {
-    background-color: #eee;
+    background: #eee;
     border: var(--border-width) var(--border-style) var(--border-color);
     display: block;
     font-size: 0.875rem;

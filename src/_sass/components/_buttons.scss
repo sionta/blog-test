@@ -1,3 +1,22 @@
+.button {
+  background: #000;
+  border: 2px solid #000;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: monospace;
+  font-weight: bold;
+  padding: 0.5rem 0.75rem;
+  transition: transform 0.2s;
+
+  &:hover {
+    background: #fff;
+    box-shadow: 3px 3px 0 #000;
+    color: #000;
+    transform: translate(-3px, -3px);
+  }
+}
+
 .button-contact {
   position: fixed;
   bottom: 2rem;
