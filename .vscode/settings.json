@@ -1,11 +1,15 @@
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "[liquid]": {
+    "editor.defaultFormatter": "Shopify.theme-check-vscode",
+    "editor.formatOnSave": true
+  },
   "files.associations": {
     "*.html": "liquid",
     "**/_includes/**": "liquid"
   },
-  "[liquid]": {
-    "editor.defaultFormatter": "Shopify.theme-check-vscode",
-    "editor.formatOnSave": true
-  }
+  "git.autofetch": true,
+  "git.autofetchPeriod": 30
 }
-
