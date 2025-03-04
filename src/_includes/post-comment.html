@@ -7,10 +7,8 @@
   | append: '/comments'
 %}
 
-{% assign comment_parent_totals = _COMMENTS | where_exp: 'item', 'item[1].replying_to == blank' %}
-
-<section class="comments">
-  <h2 class="comments__title">Comments ({{ comment_parent_totals | size | default: 0 }})</h2>
+<section id="comments" class="comments">
+  <h2 class="comments__title">Comments ({{ _COMMENTS.size }})</h2>
   {% if _COMMENTS %}
     <ul class="comments__entries">
       {% assign comments = _COMMENTS | sort %}
@@ -28,11 +26,18 @@
                 {{- parentData.date | date: '%d %B %Y, %H:%M' -}}
               </time>
             </div>
-            <div class="comment__content">
+            <div class="comment__content markdown-prose">
               {{ parentData.message | markdownify }}
             </div>
             <div class="comment__reply">
-              <button class="comment__reply-btn" type="button" onclick="showReplyForm('{{parentGUID}}')">Reply</button>
+              <button
+                id="reply-button"
+                class="comment__reply-btn"
+                type="button"
+                onclick="showReplyForm('{{ parentGUID }}')"
+              >
+                Reply
+              </button>
 
               {% if _replies.size > 0 %}
                 <ul class="comment__reply-list" aria-labelledby="{{ parentGUID }}">
@@ -45,7 +50,7 @@
                           {{- _rdata.date | date: '%d %B %Y, %H:%M' -}}
                         </time>
                       </div>
-                      <div class="comment__content">
+                      <div class="comment__content markdown-prose">
                         {{ _rdata.message | markdownify }}
                       </div>
                     </li>
@@ -64,12 +69,12 @@
   <form class="form" method="POST" action="{{ _ENDPOINT }}" id="comment-form">
     <input type="hidden" name="options[redirect]" value="{{ page.id | absolute_url }}#comments">
     <input type="hidden" name="options[slug]" value="{{ page.slug }}">
-    <input type="hidden" id="reply-value" name="fields[replying_to]" value>
+    <input type="hidden" id="reply-value" name="fields[replying_to]" value="">
 
     <fieldset class="comment-form">
       <legend class="comment-form__title">Leave a comment</legend>
       <div class="comment-form__field">
-        <label for="comment-name" class="comment-form__label">Name</label>
+        <label for="comment-name" class="comment-form__label">Name <small>(required)</small></label>
         <input
           type="text"
           id="comment-name"
@@ -84,7 +89,7 @@
         <input type="email" id="comment-email" name="fields[email]" class="comment-form__input" autocomplete="email">
       </div>
       <div class="comment-form__field">
-        <label for="comment-message" class="comment-form__label">Comment</label>
+        <label for="comment-message" class="comment-form__label">Comment <small>(required)</small></label>
         <textarea
           id="comment-message"
           name="fields[message]"
@@ -92,6 +97,7 @@
           rows="5"
           required
         ></textarea>
+        <p class="comment-form__info"><small>Support Plaintext or Markdown</small></p>
       </div>
       <div class="comment-form__action">
         <button type="submit" class="comment-form__button">Send</button>
@@ -112,12 +118,12 @@
 <script>
   function resetReplyForm() {
     document.getElementById('reply-cancel').style.display = 'none';
-    document.getElementById('reply-value').removeAttribute('value');
+    document.getElementById('reply-value').value = '';
   }
 
   function showReplyForm(commentId) {
     document.getElementById('reply-cancel').style.display = 'inline-block';
-    document.getElementById('reply-value').setAttribute('value', commentId);
+    document.getElementById('reply-value').value = commentId;
     document.getElementById('comment-form').scrollIntoView();
   }
 </script>

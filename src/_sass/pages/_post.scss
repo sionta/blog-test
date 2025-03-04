@@ -86,42 +86,6 @@
   background-color: var(--color-light);
   padding: 2rem;
   margin-bottom: 2rem;
-
-  p {
-    margin-bottom: 1.5rem;
-  }
-
-  h2 {
-    border-bottom: 2px solid var(--color-dark);
-    font-size: 1.8rem;
-    margin: 2rem 0 1rem;
-    padding-bottom: 0.5rem;
-  }
-
-  h3 {
-    font-size: 1.4rem;
-    margin: 1.5rem 0 1rem;
-  }
-
-  ul,
-  ol {
-    margin-bottom: 1.5rem;
-    padding-left: 2rem;
-  }
-
-  blockquote {
-    border-left: var(--border-width) var(--border-style) var(--border-color);
-    font-style: italic;
-    margin: 1.5rem 0;
-    padding-left: 1rem;
-  }
-
-  img {
-    max-width: 100%;
-    height: auto;
-    margin: 1.5rem 0;
-    border: var(--border-width) var(--border-style) var(--border-color);
-  }
 }
 
 /* Article Tags */

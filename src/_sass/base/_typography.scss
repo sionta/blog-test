@@ -1,6 +1,6 @@
 @use "../abstracts/variables";
 
-.prose {
+.markdown-prose {
   // Headings
   h1,
   h2,
@@ -12,48 +12,57 @@
     margin-bottom: variables.$heading-margin-bottom;
   }
 
+  h2 {
+    border-bottom: 2px solid var(--color-dark);
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    margin: 1.5rem 0 1rem;
+  }
+
   // Paragraphs
   p {
-    margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   // Lists
   ul,
   ol {
-    margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     padding-left: 2rem;
-  }
 
-  li {
-    margin-bottom: 0.5rem;
+    @at-root {
+      li > & {
+        margin-bottom: 0.5rem;
+      }
+    }
   }
 
   // Links
   a {
-    color: #0066cc;
     text-decoration: underline solid 1px;
     transition: color 0.2s ease-in-out;
 
     &:hover {
-      color: #004499;
       text-decoration-style: dotted;
     }
   }
 
   // Blockquotes
   blockquote {
-    padding-left: 1rem;
-    border-left: 4px solid #e0e0e0;
-    margin-left: 0;
-    margin-right: 0;
+    border-left: var(--border-width) var(--border-style) var(--border-color);
     font-style: italic;
+    margin: 1.5rem 0;
+    padding-left: 1rem;
   }
 
   // Code
-  code,
-  pre {
+  pre,
+  code {
     font-family: variables.$font-family-mono;
     font-size: 0.875rem;
   }
@@ -76,5 +85,13 @@
       font: inherit;
       padding: 0;
     }
+  }
+
+  img {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem 0;
+    border: var(--border-width) var(--border-style) var(--border-color);
   }
 }
