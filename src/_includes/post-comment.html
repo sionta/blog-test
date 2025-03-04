@@ -1,4 +1,5 @@
-{% assign date_format = '%d %B %Y, %H:%M' %}
+{% comment %} {% assign date_format = '%d %B %Y, %H:%M' %} {% endcomment %}
+{% assign date_format = '%d %B %Y' %}
 {% assign _COMMENTS = site.data.comments[page.slug] %}
 {% assign _ENDPOINT = site.staticman.api
   | append: '/v2/entry/'
