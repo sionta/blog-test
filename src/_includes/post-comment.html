@@ -7,42 +7,46 @@
   | append: '/comments'
 %}
 
+{% assign comment_parent_totals = _COMMENTS | where_exp: 'item', 'item[1].replying_to == blank' %}
+
 <section class="comments">
-  <h2 class="comments__title">Comments ({{ _COMMENTS | size | default: 0 }})</h2>
+  <h2 class="comments__title">Comments ({{ comment_parent_totals | size | default: 0 }})</h2>
   {% if _COMMENTS %}
     <ul class="comments__entries">
       {% assign comments = _COMMENTS | sort %}
+
       {% for comment in comments %}
-        {% assign _data = comment[1] %}
-        {% assign _uuid = _data._id %}
-        {% unless _data.replying_to %}
-          <li class="comment comment--entry" id="{{ _uuid }}">
+        {% assign parentData = comment[1] %}
+        {% assign parentGUID = parentData._id %}
+        {% assign _replies = comments | where_exp: 'item', 'item[1].replying_to == parentGUID' %}
+
+        {% if parentData.replying_to.size < 1 %}
+          <li class="comment comment--entry" id="{{ parentGUID }}">
             <div class="comment__header">
-              <h3 class="comment__author">{{ _data.name | escape }}</h3>
-              <time class="comment__date" datetime="{{ _data.date | date_to_xmlschema }}">
-                {{- _data.date | date: '%d %B %Y, %H:%M' -}}
+              <h3 class="comment__author">{{ parentData.name | escape }}</h3>
+              <time class="comment__date" datetime="{{ parentData.date | date_to_xmlschema }}">
+                {{- parentData.date | date: '%d %B %Y, %H:%M' -}}
               </time>
             </div>
             <div class="comment__content">
-              {{ _data.message | markdownify }}
+              {{ parentData.message | markdownify }}
             </div>
             <div class="comment__reply">
-              <button class="comment__reply-btn" type="button" onclick="showReplyForm('{{ _uuid }}')">Reply</button>
+              <button class="comment__reply-btn" type="button" onclick="showReplyForm('{{parentGUID}}')">Reply</button>
 
-              {% assign _REPLIES = comments | where_exp: 'item', 'item[1].replying_to == _uuid' %}
-              {% if _REPLIES %}
-                <ul class="comment__reply-list" aria-labelledby="{{ _uuid }}">
-                  {% for reply in _REPLIES %}
-                    {% assign replyData = reply[1] %}
-                    <li class="comment comment--reply" id="{{ replyData._id }}">
+              {% if _replies.size > 0 %}
+                <ul class="comment__reply-list" aria-labelledby="{{ parentGUID }}">
+                  {% for reply in _replies %}
+                    {% assign _rdata = reply[1] %}
+                    <li class="comment comment--reply" id="{{ _rdata._id }}">
                       <div class="comment__header">
-                        <h3 class="comment__author">{{ replyData.name | escape }}</h3>
-                        <time class="comment__date" datetime="{{ replyData.date | date_to_xmlschema }}">
-                          {{- replyData.date | date: '%d %B %Y, %H:%M' -}}
+                        <h3 class="comment__author">{{ _rdata.name | escape }}</h3>
+                        <time class="comment__date" datetime="{{ _rdata.date | date_to_xmlschema }}">
+                          {{- _rdata.date | date: '%d %B %Y, %H:%M' -}}
                         </time>
                       </div>
                       <div class="comment__content">
-                        {{ replyData.message | markdownify }}
+                        {{ _rdata.message | markdownify }}
                       </div>
                     </li>
                   {% endfor %}
@@ -50,7 +54,7 @@
               {% endif %}
             </div>
           </li>
-        {% endunless %}
+        {% endif %}
       {% endfor %}
     </ul>
   {% else %}
@@ -60,34 +64,60 @@
   <form class="form" method="POST" action="{{ _ENDPOINT }}" id="comment-form">
     <input type="hidden" name="options[redirect]" value="{{ page.id | absolute_url }}#comments">
     <input type="hidden" name="options[slug]" value="{{ page.slug }}">
-    <input type="hidden" id="replying_to" name="fields[replying_to]" value="">
+    <input type="hidden" id="reply-value" name="fields[replying_to]" value>
 
     <fieldset class="comment-form">
       <legend class="comment-form__title">Leave a comment</legend>
       <div class="comment-form__field">
-        <label for="name" class="comment-form__label">Name</label>
-        <input type="text" id="name" name="fields[name]" class="comment-form__input" autocomplete="name" required>
+        <label for="comment-name" class="comment-form__label">Name</label>
+        <input
+          type="text"
+          id="comment-name"
+          name="fields[name]"
+          class="comment-form__input"
+          autocomplete="name"
+          required
+        >
       </div>
       <div class="comment-form__field">
-        <label for="email" class="comment-form__label">Email <small>(optional)</small></label>
-        <input type="email" id="email" name="fields[email]" class="comment-form__input" autocomplete="email">
+        <label for="comment-email" class="comment-form__label">Email <small>(optional)</small></label>
+        <input type="email" id="comment-email" name="fields[email]" class="comment-form__input" autocomplete="email">
       </div>
       <div class="comment-form__field">
-        <label for="message" class="comment-form__label">Comment</label>
-        <textarea id="message" name="fields[message]" class="comment-form__textarea" rows="5" required></textarea>
+        <label for="comment-message" class="comment-form__label">Comment</label>
+        <textarea
+          id="comment-message"
+          name="fields[message]"
+          class="comment-form__textarea"
+          rows="5"
+          required
+        ></textarea>
       </div>
       <div class="comment-form__action">
         <button type="submit" class="comment-form__button">Send</button>
-        {% comment %} <button type="reset" class="comment-form__button">Reset</button> {% endcomment %}
+        <button
+          id="reply-cancel"
+          type="button"
+          onclick="resetReplyForm()"
+          class="comment-form__button"
+          style="display: none;"
+        >
+          Cancel
+        </button>
       </div>
     </fieldset>
   </form>
 </section>
 
 <script>
+  function resetReplyForm() {
+    document.getElementById('reply-cancel').style.display = 'none';
+    document.getElementById('reply-value').removeAttribute('value');
+  }
+
   function showReplyForm(commentId) {
-    console.log('Replying to comment ID:', commentId); // Debugging
-    document.getElementById('replying_to').value = commentId;
+    document.getElementById('reply-cancel').style.display = 'inline-block';
+    document.getElementById('reply-value').setAttribute('value', commentId);
     document.getElementById('comment-form').scrollIntoView();
   }
 </script>

@@ -82,9 +82,10 @@
 
 /* Comment Form */
 .form {
+  display: block;
   overflow: hidden;
   background: none;
-  display: block;
+  margin-top: 1.5rem;
 }
 
 .comment-form {
