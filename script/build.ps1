@@ -11,13 +11,9 @@ $options = (
     '--config', "$CONFIG_FILES"
 )
 
-'clean', 'serve' | ForEach-Object {
+'clean', 'build' | ForEach-Object {
     $commands = "bundle exec jekyll $_ $options"
-
-    if ($_ -eq 'serve') {
-        $commands = "$commands --watch"
-    }
-
     Write-Host $commands -ForegroundColor DarkMagenta
     Invoke-Expression -Command $commands
+    if ($_ -eq 'build') { npx gulp }
 }
