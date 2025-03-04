@@ -9,14 +9,12 @@
 
 <section class="comments">
   <h2 class="comments__title">Comments ({{ _COMMENTS | size | default: 0 }})</h2>
-
-  {% if _COMMENTS.size > 0 %}
+  {% if _COMMENTS %}
     <ul class="comments__entries">
       {% assign comments = _COMMENTS | sort %}
       {% for comment in comments %}
         {% assign _data = comment[1] %}
         {% assign _uuid = _data._id %}
-
         {% unless _data.replying_to %}
           <li class="comment comment--entry" id="{{ _uuid }}">
             <div class="comment__header">
@@ -30,10 +28,11 @@
             </div>
             <div class="comment__reply">
               <button class="comment__reply-btn" type="button" onclick="showReplyForm('{{ _uuid }}')">Reply</button>
-              {% assign replies = comments | where_exp: 'item', 'item[1].replying_to == _uuid' %}
-              {% if replies.size > 0 %}
+
+              {% assign _REPLIES = comments | where_exp: 'item', 'item[1].replying_to == _uuid' %}
+              {% if _REPLIES %}
                 <ul class="comment__reply-list" aria-labelledby="{{ _uuid }}">
-                  {% for reply in replies %}
+                  {% for reply in _REPLIES %}
                     {% assign replyData = reply[1] %}
                     <li class="comment comment--reply" id="{{ replyData._id }}">
                       <div class="comment__header">
