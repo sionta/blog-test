@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "bash ./script/run.sh --mode build",
+    "build": "bash ./script/run.sh --mode build --config _config.yml",
     "serve": "bash ./script/run.sh --mode watch",
     "minify": "npx gulp"
   },
