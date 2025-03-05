@@ -8,7 +8,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "bundle exec jekyll build --source src --config _config.yml",
+    "build": "bash ./script/run.sh --mode build",
+    "serve": "bash ./script/run.sh --mode watch",
     "minify": "npx gulp"
   },
   "devDependencies": {

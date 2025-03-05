@@ -34,7 +34,7 @@ comments:
   format: "yaml"
 
   # Text to use as the commit message or pull request title. Accepts placeholders.
-  commitMessage: "Comment from {fields.name} on {options.slug}"
+  commitMessage: "New comment by {fields.name}"
 
   # Whether entries need to be appproved before they are published to the main
   # branch. If set to `true`, a pull request will be created for your approval.
@@ -43,6 +43,13 @@ comments:
 
   # Name of the site. Used in notification emails.
   name: "Andre Attamimi"
+
+  # (*) REQUIRED WHEN USING NOTIFICATIONS
+  #
+  # When allowedOrigins is defined, only requests sent from one of the domains
+  # listed will be accepted. The origin is sent as part as the `options` object
+  # (e.g. <input name="options[origin]" value="http://yourdomain.com/post1")
+  #allowedOrigins: ["localhost", "andreattamimi.com"]
 
   # Notification settings. When enabled, users can choose to receive notifications
   # via email when someone adds a reply or a new comment. This requires an account
@@ -66,7 +73,8 @@ comments:
   # with a `type` property, which configures the generated field, or any value
   # to be used directly (e.g. a string, number or array)
   generatedFields:
-    date:
+    someField: "some string" # Simple field (string)
+    date: # Extended field (date)
       type: date
       options:
         format: "iso8601"
