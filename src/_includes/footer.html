@@ -3,7 +3,7 @@
     <div class="cluster">
       <p>
         &copy; {{ site.time | date: '%Y' }}
-        {{ site.title }}
+        {{ site.name | default: site.title }}. Some Rights Reserved
       </p>
     </div>
   </div>

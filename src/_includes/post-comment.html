@@ -11,6 +11,62 @@
 
 <section id="comment-post" class="comments">
   <h2 class="comments__title">Comments ({{ _COMMENTS.size }})</h2>
+  <form class="form comments__form" method="POST" action="{{ _ENDPOINT }}" id="comment-form">
+    <fieldset class="comment-form">
+      <legend class="comment-form__title">Leave a comment</legend>
+      <div class="comment-form__field">
+        <label for="comment-message" class="comment-form__label">Comment <small>(required)</small></label>
+        <textarea
+          id="comment-message"
+          name="fields[message]"
+          class="comment-form__textarea"
+          placeholder="Write a comment, support GitHub Flavored Markdown (GFM) style"
+          rows="5"
+          required
+        ></textarea>
+      </div>
+      <div class="comment-form__group">
+        <div class="comment-form__field">
+          <label for="comment-name" class="comment-form__label">Name <small>(required)</small></label>
+          <input
+            type="text"
+            id="comment-name"
+            name="fields[name]"
+            class="comment-form__input"
+            placeholder="John Dean"
+            autocomplete="name"
+            required
+          >
+        </div>
+        <div class="comment-form__field">
+          <label for="comment-email" class="comment-form__label">Email <small>(optional)</small></label>
+          <input
+            type="email"
+            id="comment-email"
+            name="fields[email]"
+            class="comment-form__input"
+            placeholder="example@email.com"
+            autocomplete="email"
+          >
+        </div>
+      </div>
+      <div class="comment-form__action">
+        <button type="submit" class="comment-form__button">Comment</button>
+        <button
+          id="reply-cancel"
+          type="button"
+          onclick="cancelReplyForm()"
+          class="comment-form__button"
+          style="display: none;"
+        >
+          Cancel
+        </button>
+      </div>
+    </fieldset>
+    <input type="hidden" name="options[redirect]" value="{{ page.id | absolute_url }}#comment-post">
+    <input type="hidden" name="options[slug]" value="{{ page.slug }}">
+    <input type="hidden" id="reply-field" name="fields[replying_to]" value="">
+  </form>
 
   {% if _COMMENTS %}
     <ul class="comments__entries">
@@ -65,62 +121,6 @@
   {% else %}
     <p class="comments__empty">No comments yet. Be the first to comment!</p>
   {% endif %}
-
-  <form class="form comments__form" method="POST" action="{{ _ENDPOINT }}" id="comment-form">
-    <input type="hidden" name="options[redirect]" value="{{ page.id | absolute_url }}#comment-post">
-    <input type="hidden" name="options[slug]" value="{{ page.slug }}">
-    <input type="hidden" id="reply-field" name="fields[replying_to]" value="">
-
-    <fieldset class="comment-form">
-      <legend class="comment-form__title">Leave a comment</legend>
-      <div class="comment-form__field">
-        <label for="comment-name" class="comment-form__label">Name <small>(required)</small></label>
-        <input
-          type="text"
-          id="comment-name"
-          name="fields[name]"
-          class="comment-form__input"
-          placeholder="John Dean"
-          autocomplete="name"
-          required
-        >
-      </div>
-      <div class="comment-form__field">
-        <label for="comment-email" class="comment-form__label">Email <small>(optional)</small></label>
-        <input
-          type="email"
-          id="comment-email"
-          name="fields[email]"
-          class="comment-form__input"
-          placeholder="example@email.com"
-          autocomplete="email"
-        >
-      </div>
-      <div class="comment-form__field">
-        <label for="comment-message" class="comment-form__label">Comment <small>(required)</small></label>
-        <textarea
-          id="comment-message"
-          name="fields[message]"
-          class="comment-form__textarea"
-          placeholder="Write a comment, support GitHub Flavored Markdown (GFM) style"
-          rows="5"
-          required
-        ></textarea>
-      </div>
-      <div class="comment-form__action">
-        <button type="submit" class="comment-form__button">Comment</button>
-        <button
-          id="reply-cancel"
-          type="button"
-          onclick="cancelReplyForm()"
-          class="comment-form__button"
-          style="display: none;"
-        >
-          Cancel
-        </button>
-      </div>
-    </fieldset>
-  </form>
 </section>
 
 <script>

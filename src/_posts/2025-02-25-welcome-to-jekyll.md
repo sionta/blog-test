@@ -14,7 +14,7 @@ Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit number
 
 Jekyll also offers powerful support for code snippets:
 
-With highlight tag:
+With Liquid {% raw %}`{% highlight %}`{% endraw %} tag:
 
 {% highlight ruby %}
 def print_hi(name)
@@ -24,7 +24,7 @@ print_hi('Tom')
 #=> prints 'Hi, Tom' to STDOUT.
 {% endhighlight %}
 
-With fenced block:
+With Fenced Code Block:
 
 ```ruby
 def print_hi(name)

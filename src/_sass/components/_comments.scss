@@ -1,21 +1,25 @@
 /* Comments */
 .comments {
-  margin-bottom: 2rem;
+  font-size: 1rem;
 
   &__title {
     font-size: 1.5rem;
-    border-bottom: 3px solid #000;
+    border-bottom: var(--border-width) var(--border-style) var(--border-color);
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
   }
 
   &__entries {
     list-style: none;
+
+    > :last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
 .comment__replies {
-  border-left: 3px solid #000;
+  border-left: var(--border-width) var(--border-style) var(--border-color);
   list-style: none;
   margin-top: 1rem;
   padding-left: 1rem;
@@ -23,9 +27,13 @@
 
 .comment {
   background-color: #fff;
-  border: 3px solid #000;
+  border: var(--border-width) var(--border-style) var(--border-color);
   margin-bottom: 1rem;
   padding: 1rem;
+
+  > :last-child {
+    margin-bottom: 0;
+  }
 
   &--entry {
     > .comment__header {
@@ -40,7 +48,7 @@
   }
 
   &--reply {
-    border-width: 2px;
+    border-width: var(--border-width);
     margin-bottom: 0.5rem;
 
     &:last-child {
@@ -49,13 +57,13 @@
   }
 
   &__reply-btn {
+    --border-width: 2px;
     display: block;
     background-color: #000;
     color: #fff;
-    border: 2px solid #000;
+    border: var(--border-width) var(--border-style) var(--border-color);
     padding: 0.25rem 0.5rem;
     font-weight: bold;
-    font-family: monospace;
     cursor: pointer;
     transition: transform 0.2s;
 
@@ -104,22 +112,31 @@
   display: block;
   overflow: hidden;
   background: none;
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
 }
 
 .comment-form {
   background-color: #fff;
-  border: 3px solid #000;
+  border: var(--border-width) var(--border-style) var(--border-color);
   padding: 1rem;
 
   &__title {
     background-color: #fff;
-    border: 3px solid #000;
+    border: var(--border-width) var(--border-style) var(--border-color);
     box-shadow: 3px 3px 0 #000;
     color: #000;
-    font-family: monospace;
     font-size: 1rem;
     padding: 3px 9px;
+  }
+
+  &__group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    > * {
+      flex: 1;
+    }
   }
 
   &__field {
@@ -135,9 +152,8 @@
   &__input,
   &__message,
   &__textarea {
-    border: 2px solid #000;
+    border: var(--border-width) var(--border-style) var(--border-color);
     display: block;
-    font-family: monospace;
     padding: 0.75rem;
     width: 100%;
 
@@ -161,7 +177,7 @@
 
   &__message,
   &__textarea {
-    min-height: 180px;
+    min-height: 3rem;
     overflow: hidden;
     resize: vertical;
   }
@@ -169,10 +185,9 @@
   &__button {
     background-color: #000;
     color: #fff;
-    border: 2px solid #000;
+    border: var(--border-width) var(--border-style) var(--border-color);
     padding: 0.5rem 1rem;
     font-weight: bold;
-    font-family: monospace;
     cursor: pointer;
     transition: transform 0.2s;
 

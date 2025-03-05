@@ -14,12 +14,13 @@
   }
 
   &__category {
+    --border-width: 2px;
     display: inline-block;
     padding: 0.3rem 0.6rem;
     background-color: var(--color-dark);
     color: var(--color-light);
     font-weight: bold;
-    border: 2px solid var(--color-dark);
+    border: var(--border-width) var(--border-style) var(--color-dark);
     margin-right: 0.5rem;
     transform: rotate(-1deg);
   }
@@ -38,13 +39,11 @@
     border: var(--border-width) var(--border-style) var(--border-color);
     padding: 0.5rem;
     background-color: var(--color-light);
-    position: relative;
-    left: -5px;
   }
 
   &__author {
-    margin-right: 1.5rem;
     font-weight: bold;
+    margin-right: 1rem;
   }
 
   &__date {
@@ -84,7 +83,7 @@
 .article__content {
   border: var(--border-width) var(--border-style) var(--border-color);
   background-color: var(--color-light);
-  padding: 2rem;
+  padding: 1rem;
   margin-bottom: 2rem;
 }
 
@@ -106,7 +105,7 @@
 /* Author Bio */
 .author {
   border: var(--border-width) var(--border-style) var(--border-color);
-  padding: 1.5rem;
+  padding: 1rem;
   background-color: var(--color-light);
   margin-bottom: 2rem;
   display: flex;

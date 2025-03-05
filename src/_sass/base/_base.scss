@@ -3,7 +3,7 @@
 :root {
   --border-color: #000;
   --border-style: solid;
-  --border-width: 3px;
+  --border-width: 2px;
 
   --color-dark: #000;
   --color-dark-2: #222;
@@ -11,28 +11,9 @@
   --color-light-2: #ccc;
 }
 
-// Set defaults
-html {
-  font-size: variables.$base-font-size;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 768px) {
-    font-size: calc(variables.$base-font-size - 1px);
-  }
-
-  @media (max-width: 576px) {
-    font-size: calc(variables.$base-font-size - 2px);
-  }
-}
-
 #app {
   background-color: #f5f5f0;
-  font-family: "IBM Plex Mono", "CoFo Sans Mono", "DejaVu Sans Mono",
-    "Fira Code", monospace, sans-serif;
-  font-size: variables.$font-size-md;
-  font-weight: variables.$base-font-weight;
-  line-height: variables.$base-line-height;
+  // color: ;
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
@@ -51,10 +32,31 @@ html {
 }
 
 .icon {
-  height: auto;
-  width: 1.25em;
   display: inline-block;
+  height: 1.25em;
   vertical-align: middle;
+  width: 1.25em;
+}
+
+// Set defaults
+html {
+  font-size: variables.$base-font-size;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 768px) {
+    font-size: calc(variables.$base-font-size - 1px);
+  }
+
+  @media (max-width: 576px) {
+    font-size: calc(variables.$base-font-size - 2px);
+  }
+}
+
+body {
+  font-family: variables.$base-font-family;
+  font-weight: variables.$base-font-weight;
+  line-height: variables.$base-line-height;
 }
 
 // Headings
@@ -67,7 +69,6 @@ h6 {
   font-family: variables.$heading-font-family;
   font-weight: variables.$heading-font-weight;
   line-height: variables.$heading-line-height;
-  color: variables.$heading-color;
 }
 
 h1 {

@@ -1,15 +1,13 @@
 ---
 layout: base
 ---
-<div class="wrapper">
-  <div class="home__banner">
-    <p>Hello world :)</p>
-    <h1>{{ site.name | default: site.title }}</h1>
-    <p>{{ site.tagline | default site.description }}</p>
-    <div class="home__cta">
-      <a href="{{ '/contact/' | relative_url }}">Get in touch</a>
-      <a href="{{ '/blog/' | relative_url }}">Read Articles</a>
-    </div>
+<div class="wrapper home-hero">
+  <p>Hello world :)</p>
+  <h1>{{ site.name | default: site.title }}</h1>
+  <p>{{ site.tagline | default: site.description }}</p>
+  <div class="home__cta">
+    <a href="{{ '/contact/' | relative_url }}">Get in touch</a>
+    <a href="{{ '/blog/' | relative_url }}">Read Articles</a>
   </div>
 </div>
 

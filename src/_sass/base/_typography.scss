@@ -8,25 +8,54 @@
   h4,
   h5,
   h6 {
-    margin-top: variables.$heading-margin-top;
-    margin-bottom: variables.$heading-margin-bottom;
+    margin-bottom: 0.5em;
+    margin-top: 1.5em;
   }
-
   h2 {
     border-bottom: 2px solid var(--color-dark);
     font-size: 1.8rem;
-    margin: 2rem 0 1rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
     padding-bottom: 0.5rem;
   }
-
   h3 {
     font-size: 1.4rem;
-    margin: 1.5rem 0 1rem;
+    padding-bottom: 0.5rem;
   }
 
   // Paragraphs
   p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  // Links
+  a {
+    text-decoration: underline solid 1px;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      text-decoration-style: dotted;
+    }
+  }
+
+  // Images
+  img {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem 0;
+  }
+
+  // Blockquotes
+  blockquote {
+    border-left: var(--border-width) var(--border-style) var(--border-color);
+    font-style: italic;
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+
+    > :last-child {
+      margin-bottom: 0;
+    }
   }
 
   // Lists
@@ -40,24 +69,6 @@
         margin-bottom: 0.5rem;
       }
     }
-  }
-
-  // Links
-  a {
-    text-decoration: underline solid 1px;
-    transition: color 0.2s ease-in-out;
-
-    &:hover {
-      text-decoration-style: dotted;
-    }
-  }
-
-  // Blockquotes
-  blockquote {
-    border-left: var(--border-width) var(--border-style) var(--border-color);
-    font-style: italic;
-    margin: 1.5rem 0;
-    padding-left: 1rem;
   }
 
   // Code
@@ -74,24 +85,23 @@
   }
 
   pre {
-    font-size: 0.9rem;
-    padding: 1rem;
-    overflow: auto;
     background-color: rgba(0, 0, 0, 0.05);
     border-radius: 4px;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    padding: 1rem;
 
+    pre,
     code {
       background: none;
-      font: inherit;
+      border-radius: 0;
+      border: none;
+      margin: 0;
       padding: 0;
     }
-  }
 
-  img {
-    display: inline-block;
-    max-width: 100%;
-    height: auto;
-    margin: 1.5rem 0;
-    border: var(--border-width) var(--border-style) var(--border-color);
+    > code {
+      font: inherit;
+    }
   }
 }
