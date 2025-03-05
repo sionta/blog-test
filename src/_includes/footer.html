@@ -8,8 +8,10 @@
     </div>
   </div>
 
-  <div class="button-contact">
-    {%- assign email = site.email | default: site.social.email | default: site.author.email -%}
-    <a href="mailto:{{- email -}}" class="button-contact__link" title="Contact me">Email</a>
-  </div>
+  {% comment %}
+    <div class="button-contact">
+      {%- assign email = site.email | default: site.social.email | default: site.author.email -%}
+      <a href="mailto:{{- email -}}" class="button-contact__link" title="Contact me">Email</a>
+    </div>
+  {% endcomment %}
 </footer>
