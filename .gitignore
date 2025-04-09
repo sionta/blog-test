@@ -8,7 +8,7 @@ _site
 .bundle
 vendor
 *.gem
-#Gemfile.lock
+Gemfile.lock
 
 !/src/vendor
 
